@@ -53,6 +53,8 @@ L = [
 ['Adam', 'Bart', 'Lisa']
 ]
 
+
+
 # 打印apple
 print(L[0][0])
 
