@@ -207,3 +207,130 @@ def power(x, n):
 # 调用power函数
 print(power(5,4))
 
+print('------------------------------------------------------------------------')
+
+# 默认参数
+# 如果经常计算x²，所以，完全可以把第二个参数 n 的默认值设定为 2
+def power(x, n=2):
+    s = 1
+    while n > 0:
+        n = n - 1
+        s = s * x
+    return s
+
+# 调用power()函数
+print(power(3))
+print(power(3,3))
+
+# 默认函数最大的优势是能降低调用函数的难度，当函数有多个参数时，把变化大的参数放前面，变化小的参数放后面
+# 变化小的参数就可以作为默认参数
+
+print('------------------------------------------------------------------------')
+
+# 例如：一年级小学生注册的函数，需要传入name和gender两个参数：
+def enroll(name, gender):
+    print('name:', name)
+    print('gender:', gender)
+
+# 调用enroll函数
+print(enroll('longweiqiang', 'F'))
+
+print('------------------------------------------------------------------------')
+
+# 如果要继续传入年龄、城市等信息时，可以把年龄和城市设为默认参数
+def enroll(name, gender, age=6, city='Shanghai'):
+    print('name:', name)
+    print('gender:', gender)
+    print('age:', age)
+    print('city:', city)
+
+# 调用enroll函数
+print(enroll('longweiqiang', 'F'))
+print(enroll('longweiqiang', 'F', 5, 'Changsha'))
+# 可以按顺序提供默认参数
+print(enroll('longweiqiang', 'F', 7))
+# 也可以不按顺序提供部分默认参数，但需要把参数名写上
+print(enroll('longweiqiang', 'F', city='Tianjin'))
+
+print('------------------------------------------------------------------------')
+
+# 默认参数很有用，但使用不当，也会掉坑里。默认参数有个最大的坑，
+# 演示如下：
+# 先定义一个函数，传入一个list，添加一个END再返回
+def add_end(L=[]):
+    L.append('END')
+    return L
+
+# 正常调用时，结果没问题
+print(add_end([1,2,3]))
+
+# 使用默认参数调用，一开始结果也没问题
+print(add_end())
+
+# 当再次调用时，结果就不对了
+print(add_end())
+'''
+原因解释如下：
+Python 函数在定义的时候，默认参数 L 的值就被计算出来了，即[]，因
+为默认参数 L 也是一个变量，它指向对象[]，每次调用该函数，如果改
+变了 L 的内容，则下次调用时，默认参数的内容就变了，不再是函数定
+义时的[]了。
+所以，定义默认参数要牢记一点：默认参数必须指向不变对象！
+'''
+
+print('------------------------------------------------------------------------')
+
+# 要修改上面的例子，我们可以用 None 这个不变对象来实现：
+def add_end(L=None):
+    if L is None:
+        L = []
+    L.append('END')
+    return L
+
+# 现在，无论调用多少次，都不会有问题
+print(add_end())
+print(add_end())
+print(add_end())
+
+print('------------------------------------------------------------------------')
+
+# 可变参数
+'''
+在 Python 函数中，还可以定义可变参数。顾名思义，可变参数就是传
+入的参数个数是可变的，可以是 1 个、 2 个到任意个，还可以是 0 个
+'''
+# 举例：
+# 以数学题为例，给定一组数字a，b，c....,请计算a²+b²+c²+....
+# 要定义这个函数，我们必须确定输入的参数。由于参数个数不确定，我们首先想到可以把a，b，c...作为一个list或tuple
+# 传进来，这样函数定义如下：
+def calc(numbers):
+    sum = 0
+    for i in numbers:
+        sum = sum + i * i
+    return sum
+
+# 但是调用的时候，需要先组装出一个list或tuple
+print(calc([1,2,3]))
+print(calc((1,3,5,7)))
+
+# 把函数的参数改为可变参数
+def calc(*numbers):
+    sum = 0
+    for i in numbers:
+        sum = sum + i * i
+    return sum
+
+'''
+定义可变参数和定义一个list或tuple参数相比，仅仅在参数前面加了一个*号。
+在函数内部，参数numbers接收到的是一个tuple，因此，函数代码完全不变。
+但是，调用该函数时，可以传入任意个参数，包括0个参数
+'''
+
+# 如果已经有一个 list 或者 tuple，可以写成如下
+nums = [1,2,3]
+print(calc(nums[0], nums[1], nums[2]))
+
+# 上面的写法可行，但是太复杂，所以Python允许在list或tuple签名加一个*号，把list或tuple的元素变成可变参数传进去
+# *nums 表示把 nums 这个 list 的所有元素作为可变参数传进去。这种写法相当有用，而且很常见
+print(calc(*nums))
+
