@@ -86,6 +86,12 @@ AttributeError: 'int' object has no attribute 'lower'
 '''
 
 # 使用内建的isinstance函数可以判断一个变量是不是字符串
+'''
+isinstance()函数来判断一个对象是否是一个已知的类型，类似type()
+语法:isinstance(object, classinfo)
+参数:object -- 实例对象,classinfo -- 可以是直接或间接类名、基本类型或者有它们组成的元组
+返回值:如果对象的类型与参数二的类型（classinfo）相同则返回 True，否则返回 False
+'''
 x = 'abc'
 y = 123
 print(isinstance(x,str))
