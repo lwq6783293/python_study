@@ -52,7 +52,7 @@ print(next(g))
 
 print('------------------------------------------------------------------------')
 
-# 此处会报错，原因是generator保存的是算法，每次调用next(g)，就计算出g的下一个元素的值，知道计算到最后一个元素
+# 此处会报错，原因是generator保存的是算法，每次调用next(g)，就计算出g的下一个元素的值，直到计算到最后一个元素
 # 没有更多元素时，抛出StopIteration的错误
 # print(next(g))
 
@@ -154,6 +154,43 @@ while True:
     except StopIteration as e:
         print('Generator return value:', e.value)
         break
+
+print('------------------------------------------------------------------------')
+
+# 练习
+'''
+杨辉三角定义如下：
+
+          1
+        1   1
+      1   2   1
+    1   3   3   1
+  1   4   6   4   1
+1   5   10  10  5   1
+
+把每一行看做一个list，试写一个generator，不断输出下一行的list
+'''
+def triangles():
+    L = [1]
+    # print(L)
+    yield L
+    while True:
+        L = [1] + [L[x] + L[x + 1]
+                   for x in range(len(L) - 1)] + [1]
+        yield L
+n = 0
+for L in triangles():
+    print(L)
+    n = n + 1
+    if n == 10:
+        break
+
+
+
+
+
+
+
 
 
 
